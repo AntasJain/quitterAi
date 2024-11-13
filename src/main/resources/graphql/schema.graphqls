@@ -3,12 +3,37 @@ type User {
     email: String!
     role: String!
 }
+type CravingsLog{
+    id: ID!
+    timestamp: String
+    notes: String
+    cravingType: String
+    intensity: Int
+}
 
+
+type MileStone{
+    id:ID!
+    milestoneName: String
+    targetDate: String
+    isAchieved: Boolean
+}
+type HealthBenefit{
+    id:ID!
+    description:String
+    achievedDate:String
+}
 type Query {
     getUserProgress(id: ID!): User
+    getUserCravings: [CravingsLog]
+    getUserHealthBenefits: [HealthBenefit]
+
 }
 
 type Mutation {
     registerUser(email: String!, password: String!, role: String!): String
     loginUser(email: String!, password: String!): String
+    logCravings(cravingType: String, intensity: Int, notes: String): CravingsLog
+    updateMilestone(milestoneId: ID!, isAchieved: Boolean): MileStone
 }
+
