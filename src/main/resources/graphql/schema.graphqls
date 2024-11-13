@@ -1,0 +1,14 @@
+type User {
+    id: ID!
+    email: String!
+    role: String!
+}
+
+type Query {
+    getUserProgress(id: ID!): User
+}
+
+type Mutation {
+    registerUser(email: String!, password: String!, role: String!): String
+    loginUser(email: String!, password: String!): String
+}
