@@ -10,8 +10,6 @@ type CravingsLog{
     cravingType: String
     intensity: Int
 }
-
-
 type MileStone{
     id:ID!
     milestoneName: String
@@ -34,6 +32,6 @@ type Mutation {
     registerUser(email: String!, password: String!, role: String!): String
     loginUser(email: String!, password: String!): String
     logCravings(cravingType: String, intensity: Int, notes: String): CravingsLog
-    updateMilestone(milestoneId: ID!, isAchieved: Boolean): MileStone
+    updateMilestone(milestoneId: ID!, isAchieved: Boolean, targetDate: String): MileStone
 }
 
