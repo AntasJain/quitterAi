@@ -1,33 +1,39 @@
 package tech.antasjain.quitterAi.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.antasjain.quitterAi.entity.CravingsLog;
-import tech.antasjain.quitterAi.entity.User;
 import tech.antasjain.quitterAi.repository.CravingsLogRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CravingsLogService {
 
+    private final CravingsLogRepository cravingsLogRepository;
 
-    private CravingsLogRepository cravingsLogRepository;
-    @Autowired
-    public CravingsLogService(CravingsLogRepository cravingsLogRepository) {
-        this.cravingsLogRepository = cravingsLogRepository;
+    public CravingsLog addCravingsLog(String timestamp, String notes, String cravingType, Integer intensity) {
+        CravingsLog cravingsLog = new CravingsLog();
+        cravingsLog.setTimestamp(timestamp);
+        cravingsLog.setNotes(notes);
+        cravingsLog.setCravingType(cravingType);
+        cravingsLog.setIntensity(intensity);
+        return cravingsLogRepository.save(cravingsLog);
     }
 
-    public CravingsLog logCraving(User user, String cravingType, int intensity, String notes) {
-        CravingsLog log = new CravingsLog();
-        log.setUser(user);
-        log.setCravingType(cravingType);
-        log.setIntensity(intensity);
-        log.setNotes(notes);
-        return cravingsLogRepository.save(log);
+    public List<CravingsLog> getAllCravingsLogs() {
+        return cravingsLogRepository.findAll();
     }
 
-    public List<CravingsLog> getUserCravings(User user){
-        return cravingsLogRepository.findByUser(user);
+    public Optional<CravingsLog> getCravingsLogById(Long id) {
+        return cravingsLogRepository.findById(id);
+    }
+
+
+    public void deleteCravingsLog(Long id) {
+        cravingsLogRepository.deleteById(id);
     }
 }

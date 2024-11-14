@@ -1,35 +1,43 @@
 package tech.antasjain.quitterAi.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tech.antasjain.quitterAi.entity.Milestone;
-import tech.antasjain.quitterAi.entity.User;
 import tech.antasjain.quitterAi.repository.MilestoneRepository;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MilestoneService {
 
+    private final MilestoneRepository milestoneRepository;
 
-    private MilestoneRepository milestoneRepository;
-
-    @Autowired
-    public MilestoneService(MilestoneRepository milestoneRepository){
-        this.milestoneRepository=milestoneRepository;
+    public Milestone addMilestone(String milestoneName, String targetDate, Boolean isAchieved) {
+        Milestone milestone = new Milestone();
+        milestone.setMilestoneName(milestoneName);
+        milestone.setTargetDate(targetDate);
+        milestone.setIsAchieved(isAchieved);
+        return milestoneRepository.save(milestone);
     }
 
-    public Milestone setMilestone(User user, String milestone, Boolean isAchieved, LocalDate targetDate){
-        Milestone log = new Milestone();
-        log.setUser(user);
-        log.setMilestoneName(milestone);
-        log.setAchieved(isAchieved);
-        log.setTargetDate(targetDate);
-        return  milestoneRepository.save(log);
+    public List<Milestone> getAllMilestones() {
+        return milestoneRepository.findAll();
     }
 
-    public List<Milestone> getUserMilestones(User user){
-        return milestoneRepository.findByUser(user);
+    public Optional<Milestone> getMilestoneById(Long id) {
+        return milestoneRepository.findById(id);
+    }
+
+    public Milestone updateMilestone(Long id, Boolean isAchieved, String targetDate) {
+        Milestone milestone = milestoneRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Milestone not found"));
+        milestone.setIsAchieved(isAchieved);
+        milestone.setTargetDate(targetDate);
+        return milestoneRepository.save(milestone);
+    }
+
+    public void deleteMilestone(Long id) {
+        milestoneRepository.deleteById(id);
     }
 }

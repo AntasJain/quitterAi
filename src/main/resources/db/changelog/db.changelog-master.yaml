@@ -48,3 +48,10 @@ databaseChangeLog:
                   name: "role"
                   type: "varchar(20)"
                   defaultValue: "USER"
+  - changeSet:
+      id: "3"
+      author: "developer"
+      changes:
+        - dropColumn:
+            tableName: "users"
+            columnName: "username"
