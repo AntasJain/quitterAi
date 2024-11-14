@@ -36,9 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        }else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization header is missing or malformed");
-            return;
         }
         filterChain.doFilter(request, response);
     }

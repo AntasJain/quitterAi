@@ -1,6 +1,7 @@
 package tech.antasjain.quitterAi.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,17 +38,22 @@ public class AuthService {
     }
 
     public AuthResponse login(String email, String password) {
-        // Use AuthenticationManager to validate credentials
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
+        try{// Use AuthenticationManager to validate credentials
 
-        // On successful authentication, retrieve user details
-        User user = userService.findByEmail(email);
+            // On successful authentication, retrieve user details
+            User user = userService.findByEmail(email);
 
-        // Generate token
-        String token = jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
 
-        return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole());
+            String token = jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+
+            return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole());
+        }
+        catch (Exception e){
+            throw new BadCredentialsException("Invalid Credentials",e);
+        }
+
     }
 }

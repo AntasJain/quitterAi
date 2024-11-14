@@ -25,16 +25,23 @@ type HealthBenefit {
     achievedDate: String
 }
 
+type AuthResponse {
+    token: String!
+    userId: ID!
+    email: String!
+    role: String!
+}
+
 type Query {
     getUserProgress(id: ID!): User
     getUserCravings(userId: ID!): [CravingsLog]
     getUserHealthBenefits(userId: ID!): [HealthBenefit]
-    me:User
+    me: User
 }
 
 type Mutation {
-    registerUser(email: String!, password: String!, role: String!): String
-    loginUser(email: String!, password: String!): String
+    registerUser(email: String!, password: String!, role: String!): AuthResponse
+    loginUser(email: String!, password: String!): AuthResponse
     logCravings(userId: ID!, cravingType: String!, intensity: Int!, notes: String): CravingsLog
     updateMilestone(milestoneId: ID!, isAchieved: Boolean, targetDate: String): Milestone
 }
