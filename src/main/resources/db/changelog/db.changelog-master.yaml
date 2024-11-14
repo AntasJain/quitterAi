@@ -55,3 +55,9 @@ databaseChangeLog:
         - dropColumn:
             tableName: "users"
             columnName: "username"
+  - changeSet:
+      id: "alter-achieved-date-column"
+      author: "developer"
+      changes:
+        - sql:
+            sql: "ALTER TABLE health_benefit ALTER COLUMN achieved_date SET DATA TYPE DATE USING achieved_date::date;"

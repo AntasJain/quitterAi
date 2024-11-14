@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import tech.antasjain.quitterAi.entity.CravingsLog;
 import tech.antasjain.quitterAi.repository.CravingsLogRepository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,9 @@ public class CravingsLogService {
 
     private final CravingsLogRepository cravingsLogRepository;
 
-    public CravingsLog addCravingsLog(String timestamp, String notes, String cravingType, Integer intensity) {
+    public CravingsLog addCravingsLog(String timestampString, String notes, String cravingType, Integer intensity) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime timestamp = LocalDateTime.parse(timestampString, formatter);
         CravingsLog cravingsLog = new CravingsLog();
         cravingsLog.setTimestamp(timestamp);
         cravingsLog.setNotes(notes);

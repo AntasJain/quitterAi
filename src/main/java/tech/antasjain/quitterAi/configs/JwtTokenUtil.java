@@ -31,11 +31,16 @@ public class JwtTokenUtil {
     }
 
     public Claims extractClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try{
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (Exception e){
+            throw new IllegalArgumentException("Invalid Token", e);
+        }
+
     }
 
     public String generateToken(UserDetails userDetails) {
