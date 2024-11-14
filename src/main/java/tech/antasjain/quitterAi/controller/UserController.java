@@ -21,8 +21,16 @@ public class UserController {
 
     @MutationMapping
     public AuthResponse registerUser(@Argument String email, @Argument String password, @Argument String role) {
-        return authService.register(email, password, role);
+        try {
+            AuthResponse response = authService.register(email, password, role);
+            System.out.println("AuthResponse: " + response); // Debug log
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace(); // Print stack trace to logs for troubleshooting
+            throw new RuntimeException("Failed to register user", e); // Wrap in runtime exception
+        }
     }
+
 
     @MutationMapping
     public AuthResponse loginUser(@Argument String email, @Argument String password) {

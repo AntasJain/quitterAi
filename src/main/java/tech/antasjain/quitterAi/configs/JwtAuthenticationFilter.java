@@ -26,12 +26,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
+            if (jwtTokenUtil.isTokenExpired(token)) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is expired");
+                return;
+            }
             String username = jwtTokenUtil.extractUsername(token);
             if (username != null) {
                 // Add authentication to the security context
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
+        }else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization header is missing or malformed");
+            return;
         }
         filterChain.doFilter(request, response);
     }
