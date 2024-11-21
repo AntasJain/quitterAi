@@ -15,7 +15,7 @@ public class Milestone {
     private Long id;
 
     private String milestoneName;
-    private String targetDate;   // Use `LocalDate` if your setup allows
+    private LocalDate targetDate;   // Use `LocalDate` if your setup allows
     private Boolean isAchieved;
     @ManyToOne
     private Addiction addiction;

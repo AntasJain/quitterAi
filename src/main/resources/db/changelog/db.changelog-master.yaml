@@ -68,3 +68,15 @@ databaseChangeLog:
         - dropColumn:
             tableName: "cravings_log"
             columnName: "user_id"
+  - changeSet:
+      id: "alter-target-date-column"
+      author: "developer"
+      changes:
+        - sql:
+            sql: "ALTER TABLE milestone ALTER COLUMN target_date SET DATA TYPE DATE USING target_date::date;"
+  - changeSet:
+      id: "alter-cravings-log-column"
+      author: "developer"
+      changes:
+        - sql:
+            sql: "ALTER TABLE cravings_log ALTER COLUMN timestamp SET DATA TYPE DATE USING timestamp::date;"
