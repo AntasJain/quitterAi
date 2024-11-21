@@ -4,12 +4,24 @@ type User {
     role: String!
 }
 
+type Addiction{
+    id:ID!
+    name:String!
+    startDate:String
+    user:User!
+    cravingsLog:[CravingsLog]
+    milestones:[Milestone]
+    healthBenefits:[HealthBenefit]
+
+}
+
 type CravingsLog {
     id: ID!
     timestamp: String
     notes: String
     cravingType: String
     intensity: Int
+    addiction: Addiction!
 }
 
 type Milestone {
@@ -17,12 +29,14 @@ type Milestone {
     milestoneName: String
     targetDate: String
     isAchieved: Boolean
+    addiction: Addiction!
 }
 
 type HealthBenefit {
     id: ID!
     description: String
     achievedDate: String
+    addiction: Addiction!
 }
 
 type AuthResponse {
@@ -33,15 +47,21 @@ type AuthResponse {
 }
 
 type Query {
-    getUserProgress(id: ID!): User
-    getUserCravings(userId: ID!): [CravingsLog]
-    getUserHealthBenefits(userId: ID!): [HealthBenefit]
     me: User
+    getAddictions: [Addiction] # Get all addictions for the authenticated user
+    getCravingsLogById(id: ID!): CravingsLog
+    getUserCravings: [CravingsLog] # Get cravings logs for the authenticated user
+    getMilestones(addictionId: ID!): [Milestone]
+    getHealthBenefits(addictionId: ID!): [HealthBenefit]
 }
 
 type Mutation {
     registerUser(email: String!, password: String!, role: String!): AuthResponse
     loginUser(email: String!, password: String!): AuthResponse
-    logCravings(userId: ID!, cravingType: String!, intensity: Int!, notes: String): CravingsLog
+    addAddiction(name: String!, startDate: String): Addiction # Add an addiction for the authenticated user
+    logCravings(timestamp: String!, notes: String, cravingType: String!, intensity: Int!, addictionId: ID!): CravingsLog
+    deleteCravingsLog(id: ID!): String
+    addMilestone(addictionId: ID!, milestoneName: String!, targetDate: String): Milestone
     updateMilestone(milestoneId: ID!, isAchieved: Boolean, targetDate: String): Milestone
+    addHealthBenefit(addictionId: ID!, description: String!, achievedDate: String): HealthBenefit
 }

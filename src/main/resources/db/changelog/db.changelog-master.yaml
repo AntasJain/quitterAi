@@ -61,3 +61,10 @@ databaseChangeLog:
       changes:
         - sql:
             sql: "ALTER TABLE health_benefit ALTER COLUMN achieved_date SET DATA TYPE DATE USING achieved_date::date;"
+  - changeSet:
+      id: "drop_user_id"
+      author: "developer"
+      changes:
+        - dropColumn:
+            tableName: "cravings_log"
+            columnName: "user_id"

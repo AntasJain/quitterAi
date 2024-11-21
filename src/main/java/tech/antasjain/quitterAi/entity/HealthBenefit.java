@@ -21,4 +21,7 @@ public class HealthBenefit {
     @Column(name = "achieved_date")
 
     private LocalDate achievedDate;
+
+    @ManyToOne
+    private Addiction addiction;
 }

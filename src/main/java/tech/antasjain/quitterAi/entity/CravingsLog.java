@@ -21,4 +21,6 @@ public class CravingsLog {
     private String notes;
     private String cravingType;
     private Integer intensity;
+    @ManyToOne
+    private Addiction addiction;
 }
