@@ -19,14 +19,10 @@ public class HealthBenefitController {
     private final HealthBenefitService healthBenefitService;
 
     @MutationMapping
-    public HealthBenefit addHealthBenefit(@Argument String description, @Argument String achievedDate) {
-        return healthBenefitService.addHealthBenefit(description, achievedDate);
+    public HealthBenefit addHealthBenefit(@Argument String description, @Argument String achievedDate,@Argument Long milestoneId) {
+        return healthBenefitService.addHealthBenefit(description, achievedDate, milestoneId);
     }
 
-    @QueryMapping
-    public List<HealthBenefit> getAllHealthBenefits() {
-        return healthBenefitService.getAllHealthBenefits();
-    }
 
     @QueryMapping
     public Optional<HealthBenefit> getHealthBenefitById(@Argument Long id) {
@@ -37,6 +33,10 @@ public class HealthBenefitController {
     public String deleteHealthBenefit(@Argument Long id) {
         healthBenefitService.deleteHealthBenefit(id);
         return "HealthBenefit deleted successfully";
+    }
+    @QueryMapping
+    public List<HealthBenefit> getHealthBenefitsByMilestone(@Argument Long milestoneId) {
+        return healthBenefitService.getHealthBenefitsByMilestone(milestoneId);
     }
 }
 

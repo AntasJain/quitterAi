@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,4 +20,8 @@ public class Milestone {
     private Boolean isAchieved;
     @ManyToOne
     private Addiction addiction;
+
+    @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HealthBenefit> healthBenefits;
+
 }

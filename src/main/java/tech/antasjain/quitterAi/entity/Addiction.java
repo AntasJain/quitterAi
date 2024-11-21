@@ -29,7 +29,5 @@ public class Addiction {
    @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL)
     private List<Milestone> milestones;
 
-   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL)
-    private List<HealthBenefit> healthBenefits;
 
 }

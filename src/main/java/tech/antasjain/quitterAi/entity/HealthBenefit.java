@@ -23,5 +23,7 @@ public class HealthBenefit {
     private LocalDate achievedDate;
 
     @ManyToOne
-    private Addiction addiction;
+    @JoinColumn(name = "milestone_id", nullable = false)
+    private Milestone milestone;
+
 }

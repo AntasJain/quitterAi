@@ -30,13 +30,14 @@ type Milestone {
     targetDate: String
     isAchieved: Boolean
     addiction: Addiction!
+    healthBenefits: [HealthBenefit]
 }
 
 type HealthBenefit {
     id: ID!
     description: String
     achievedDate: String
-    addiction: Addiction!
+    healthBenefits: [HealthBenefit]
 }
 
 type AuthResponse {
@@ -53,6 +54,7 @@ type Query {
     getUserCravings: [CravingsLog] # Get cravings logs for the authenticated user
     getMilestones(addictionId: ID!): [Milestone]
     getHealthBenefits(addictionId: ID!): [HealthBenefit]
+    getHealthBenefitsForMilestone(milestoneId: ID!): [HealthBenefit] # New query to get health benefits for a specific milestone
 }
 
 type Mutation {

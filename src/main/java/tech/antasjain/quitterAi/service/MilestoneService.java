@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 import tech.antasjain.quitterAi.entity.Milestone;
+import tech.antasjain.quitterAi.repository.HealthBenefitRepository;
 import tech.antasjain.quitterAi.repository.MilestoneRepository;
 
 import java.time.LocalDate;
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class MilestoneService {
 
     private final MilestoneRepository milestoneRepository;
+    private final HealthBenefitRepository healthBenefitRepository; // add this to handle health benefits
+
 
     public Milestone addMilestone(String milestoneName, String targetDate, Boolean isAchieved) {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;

@@ -80,3 +80,10 @@ databaseChangeLog:
       changes:
         - sql:
             sql: "ALTER TABLE cravings_log ALTER COLUMN timestamp SET DATA TYPE DATE USING timestamp::date;"
+  - changeSet:
+      id: "drop_column_addiction_id_from_health_benefit"
+      author: "developer"
+      changes:
+        - dropColumn:
+            tableName: "health_benefit"
+            columnName: "addiction_id"
