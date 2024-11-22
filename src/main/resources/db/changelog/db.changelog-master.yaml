@@ -87,3 +87,17 @@ databaseChangeLog:
         - dropColumn:
             tableName: "health_benefit"
             columnName: "addiction_id"
+  - changeSet:
+      id: "drop_user_id_from_milestone"
+      author: "developer"
+      changes:
+        - dropColumn:
+            tableName: "milestone"
+            columnName: "user_id"
+  - changeSet:
+      id: "drop_user_id_from_health_benefir"
+      author: "developer"
+      changes:
+        - dropColumn:
+            tableName: "health_benefit"
+            columnName: "user_id"

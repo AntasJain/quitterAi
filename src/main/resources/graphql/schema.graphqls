@@ -9,10 +9,7 @@ type Addiction{
     name:String!
     startDate:String
     user:User!
-    cravingsLog:[CravingsLog]
     milestones:[Milestone]
-    healthBenefits:[HealthBenefit]
-
 }
 
 type CravingsLog {
@@ -37,7 +34,6 @@ type HealthBenefit {
     id: ID!
     description: String
     achievedDate: String
-    healthBenefits: [HealthBenefit]
 }
 
 type AuthResponse {
@@ -52,18 +48,22 @@ type Query {
     getAddictions: [Addiction] # Get all addictions for the authenticated user
     getCravingsLogById(id: ID!): CravingsLog
     getUserCravings: [CravingsLog] # Get cravings logs for the authenticated user
-    getMilestones(addictionId: ID!): [Milestone]
-    getHealthBenefits(addictionId: ID!): [HealthBenefit]
-    getHealthBenefitsForMilestone(milestoneId: ID!): [HealthBenefit] # New query to get health benefits for a specific milestone
+    getMilestoneById(id: ID!): Milestone
+    getMilestonesByAddictionId(addictionId:ID!):[Milestone]
+    getHealthBenefitById(id: ID!): HealthBenefit
+    getHealthBenefitsByMilestone(milestoneId: ID!): [HealthBenefit] # New query to get health benefits for a specific milestone
 }
 
 type Mutation {
     registerUser(email: String!, password: String!, role: String!): AuthResponse
     loginUser(email: String!, password: String!): AuthResponse
-    addAddiction(name: String!, startDate: String): Addiction # Add an addiction for the authenticated user
+    addAddiction(name: String!, startDate: String, addictionId: ID!): Addiction # Add an addiction for the authenticated user
     logCravings(timestamp: String!, notes: String, cravingType: String!, intensity: Int!, addictionId: ID!): CravingsLog
     deleteCravingsLog(id: ID!): String
-    addMilestone(addictionId: ID!, milestoneName: String!, targetDate: String): Milestone
-    updateMilestone(milestoneId: ID!, isAchieved: Boolean, targetDate: String): Milestone
-    addHealthBenefit(addictionId: ID!, description: String!, achievedDate: String): HealthBenefit
+    addMilestone(addictionId: ID!, milestoneName: String!, targetDate: String, isAchieved:Boolean!): Milestone
+    updateMilestone(id: ID!, isAchieved: Boolean, targetDate: String): Milestone
+    addHealthBenefit(milestoneId: ID!, description: String!, achievedDate: String): HealthBenefit
+    deleteHealthBenefit(id:ID!):String
+    deleteMilestone(id:ID!): String
+    deleteAddictionById(addictionId:ID!): String
 }

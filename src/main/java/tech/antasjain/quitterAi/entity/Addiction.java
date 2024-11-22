@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,10 +22,10 @@ public class Addiction {
    @ManyToOne
    private User user;
 
-   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CravingsLog> cravingLogs;
 
-   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Milestone> milestones;
 
 

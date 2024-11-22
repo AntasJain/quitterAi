@@ -51,5 +51,19 @@ public class AddictionController {
         return addictionService.getAddictionsByUser(currentUser);
     }
 
+    @MutationMapping
+    public String deleteAddictionById(Long addictionId){
+        String message = "Addiction Deleted Successfully";
+        try{
+            addictionService.deleteAddiction(addictionId);
+
+        }
+        catch (Exception e){
+            message = e.getMessage();
+        }
+        return message;
+
+    }
+
 
 }
