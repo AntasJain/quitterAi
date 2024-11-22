@@ -12,20 +12,21 @@ import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandle
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import tech.antasjain.quitterAi.dto.AuthResponse;
 import tech.antasjain.quitterAi.entity.User;
 import tech.antasjain.quitterAi.service.AuthService;
 import tech.antasjain.quitterAi.service.UserService;
 
-import java.net.BindException;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
     private final AuthService authService;
+    private final  UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
@@ -55,6 +56,19 @@ public class UserController {
                 .message("Invalid email or password")
                 .errorType(ErrorType.ValidationError)
                 .build();
+    }
+
+    @QueryMapping
+    public User me(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getName() == null) {
+            throw new RuntimeException("User is not authenticated.");
+        }
+        User user = userService.findByEmail(auth.getName());
+        if (user == null) {
+            throw new RuntimeException("User not found!");
+        }
+        return user;
     }
 
 

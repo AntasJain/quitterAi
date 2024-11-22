@@ -22,7 +22,7 @@ public class Addiction {
    @ManyToOne
    private User user;
 
-   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "addiction", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<CravingsLog> cravingLogs;
 
    @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

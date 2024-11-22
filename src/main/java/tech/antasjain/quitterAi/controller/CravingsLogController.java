@@ -96,4 +96,19 @@ public class CravingsLogController {
 
         return cravingsLogService.getCravingsLogsForUser(currentUser);
     }
+    @QueryMapping
+    public List<CravingsLog> getCravingsLogByAddiction(@Argument Long addictionId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getName() == null) {
+            throw new RuntimeException("User is not authenticated.");
+        }
+
+        User currentUser = userService.findByEmail(auth.getName());
+        Addiction addiction = addictionService.getAddictionById(addictionId)
+                .orElseThrow(() -> new IllegalArgumentException("Addiction not found"));
+        if (!addiction.getUser().equals(currentUser)) {
+            throw new RuntimeException("You can only view cravings logs for your own addictions.");
+        }
+        return cravingsLogService.getCravingsLogByAddiction(addictionId);
+    }
 }

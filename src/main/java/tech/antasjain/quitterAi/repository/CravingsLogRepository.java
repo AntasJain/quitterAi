@@ -10,7 +10,8 @@ import java.util.List;
 @Repository
 public interface CravingsLogRepository extends JpaRepository<CravingsLog, Long> {
     List<CravingsLog> findByAddiction_User(User user);
-    List<CravingsLog> findByAddiction_Id(Long addictionId);
+    List<CravingsLog> findByAddictionId(Long addictionId);
+
 
 
 }

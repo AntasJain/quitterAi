@@ -36,8 +36,9 @@ public class CravingsLogService {
         return cravingsLogRepository.findByAddiction_User(user);
     }
 
-    public List<CravingsLog> getCravingsLogsForAddiction(Long addictionId) {
-        return cravingsLogRepository.findByAddiction_Id(addictionId);
+    public List<CravingsLog> getCravingsLogByAddiction(Long addictionId) {
+
+        return cravingsLogRepository.findByAddictionId(addictionId);
     }
 
     public Optional<CravingsLog> getCravingsLogById(Long id) {

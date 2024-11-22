@@ -48,6 +48,7 @@ type Query {
     getAddictions: [Addiction] # Get all addictions for the authenticated user
     getCravingsLogById(id: ID!): CravingsLog
     getUserCravings: [CravingsLog] # Get cravings logs for the authenticated user
+    getCravingsLogByAddiction(addictionId:ID!): [CravingsLog]
     getMilestoneById(id: ID!): Milestone
     getMilestonesByAddictionId(addictionId:ID!):[Milestone]
     getHealthBenefitById(id: ID!): HealthBenefit
@@ -57,7 +58,7 @@ type Query {
 type Mutation {
     registerUser(email: String!, password: String!, role: String!): AuthResponse
     loginUser(email: String!, password: String!): AuthResponse
-    addAddiction(name: String!, startDate: String, addictionId: ID!): Addiction # Add an addiction for the authenticated user
+    addAddiction(name: String!, startDate: String): Addiction # Add an addiction for the authenticated user
     logCravings(timestamp: String!, notes: String, cravingType: String!, intensity: Int!, addictionId: ID!): CravingsLog
     deleteCravingsLog(id: ID!): String
     addMilestone(addictionId: ID!, milestoneName: String!, targetDate: String, isAchieved:Boolean!): Milestone

@@ -22,5 +22,6 @@ public class CravingsLog {
     private String cravingType;
     private Integer intensity;
     @ManyToOne
+    @JoinColumn(name = "addiction_id", nullable = false)
     private Addiction addiction;
 }
