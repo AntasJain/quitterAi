@@ -13,6 +13,7 @@ import tech.antasjain.quitterAi.service.AddictionService;
 import tech.antasjain.quitterAi.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,16 +53,28 @@ public class AddictionController {
     }
 
     @MutationMapping
-    public String deleteAddictionById(Long addictionId){
-        String message = "Addiction Deleted Successfully";
+    public String deleteAddictionById(@Argument Long addictionId){
+        Optional<Addiction> addiction = addictionService.getAddictionById(addictionId);
+        if(addiction.isEmpty()){
+            throw new RuntimeException("Addiction not found");
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth==null||auth.getName()==null){
+            throw new RuntimeException("Unauthenticated User");
+        }
+        User currentUser = userService.findByEmail(auth.getName());
+        if(!addiction.get().getUser().equals(currentUser)){
+            throw new RuntimeException("You can only delete your own Addictions.");
+        }
+
         try{
             addictionService.deleteAddiction(addictionId);
 
         }
         catch (Exception e){
-            message = e.getMessage();
+            e.printStackTrace();
         }
-        return message;
+        return "Addiction Deleted Successfully";
 
     }
 
