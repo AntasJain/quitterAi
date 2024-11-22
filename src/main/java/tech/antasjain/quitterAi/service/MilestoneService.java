@@ -47,7 +47,7 @@ public class MilestoneService {
         return milestoneRepository.save(milestone);
     }
 
-    public void deleteMilestone(Long id) {
+    public void deleteMilestoneById(Long id) {
         milestoneRepository.deleteById(id);
     }
 }

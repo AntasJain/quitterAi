@@ -63,8 +63,25 @@ public class MilestoneController {
     }
 
     @MutationMapping
-    public String deleteMilestone(@Argument Long id) {
-        milestoneService.deleteMilestone(id);
+    public String deleteMilestoneById(@Argument Long id) {
+        Optional<Milestone> milestone = milestoneService.getMilestoneById(id);
+        if(milestone.isEmpty()){
+            throw new RuntimeException("Milestone not found.");
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getName() == null) {
+            throw new RuntimeException("User is not authenticated.");
+        }
+        User currentUser = userService.findByEmail(auth.getName());
+        if(!milestone.get().getAddiction().getUser().equals(currentUser)){
+            throw new RuntimeException("You can only delete your own milestones.");
+        }try {
+
+            milestoneService.deleteMilestoneById(id);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return "Milestone deleted successfully";
     }
 }

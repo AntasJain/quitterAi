@@ -19,6 +19,7 @@ public class Milestone {
     private LocalDate targetDate;   // Use `LocalDate` if your setup allows
     private Boolean isAchieved;
     @ManyToOne
+    @JoinColumn(name = "addiction_id", nullable = false)
     private Addiction addiction;
 
     @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL, orphanRemoval = true)

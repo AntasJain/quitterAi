@@ -25,7 +25,7 @@ public class Addiction {
    @OneToMany(mappedBy = "addiction", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<CravingsLog> cravingLogs;
 
-   @OneToMany(mappedBy = "addiction", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "addiction", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Milestone> milestones;
 
 

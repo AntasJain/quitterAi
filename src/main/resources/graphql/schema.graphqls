@@ -65,6 +65,6 @@ type Mutation {
     updateMilestone(id: ID!, isAchieved: Boolean, targetDate: String): Milestone
     addHealthBenefit(milestoneId: ID!, description: String!, achievedDate: String): HealthBenefit
     deleteHealthBenefit(id:ID!):String
-    deleteMilestone(id:ID!): String
+    deleteMilestoneById(id:ID!): String
     deleteAddictionById(addictionId:ID!): String
 }
