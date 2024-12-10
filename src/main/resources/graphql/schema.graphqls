@@ -53,6 +53,7 @@ type Query {
     getMilestonesByAddictionId(addictionId:ID!):[Milestone]
     getHealthBenefitById(id: ID!): HealthBenefit
     getHealthBenefitsByMilestone(milestoneId: ID!): [HealthBenefit] # New query to get health benefits for a specific milestone
+    completion(message:String!):String
 }
 
 type Mutation {
